@@ -9,15 +9,17 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Core", "Core", "{EBD41FCD-B
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DomainLayer", "Core\DomainLayer\DomainLayer.csproj", "{F2B1B5AC-99E3-4EA7-AC88-BDF78B42841C}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Services", "Core\Services\Services.csproj", "{1B08D6BF-EC19-4CCA-8C38-C3AA95A8D2EF}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Service", "Core\Services\Service.csproj", "{1B08D6BF-EC19-4CCA-8C38-C3AA95A8D2EF}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ServiceAbstractions", "Core\ServiceAbstractions\ServiceAbstractions.csproj", "{2700D96A-20AC-4BF5-BCE4-9B0D74779A06}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ServiceAbstraction", "Core\ServiceAbstractions\ServiceAbstraction.csproj", "{2700D96A-20AC-4BF5-BCE4-9B0D74779A06}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Infrastructure", "Infrastructure", "{427A764E-B55A-4284-899D-7FCC496C73D9}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Persistence", "Infrastructure\Persistence\Persistence.csproj", "{2648F185-CD65-407D-A5BA-A2CF10A1A3EC}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Presentation", "Infrastructure\Presentation\Presentation.csproj", "{7A8B0FE9-4483-4EEE-A683-22603DEBB537}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Shared", "Shared\Shared.csproj", "{0556BD62-2F6A-4410-BEAD-7E460463DB47}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -49,6 +51,10 @@ Global
 		{7A8B0FE9-4483-4EEE-A683-22603DEBB537}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{7A8B0FE9-4483-4EEE-A683-22603DEBB537}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{7A8B0FE9-4483-4EEE-A683-22603DEBB537}.Release|Any CPU.Build.0 = Release|Any CPU
+		{0556BD62-2F6A-4410-BEAD-7E460463DB47}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{0556BD62-2F6A-4410-BEAD-7E460463DB47}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{0556BD62-2F6A-4410-BEAD-7E460463DB47}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{0556BD62-2F6A-4410-BEAD-7E460463DB47}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
