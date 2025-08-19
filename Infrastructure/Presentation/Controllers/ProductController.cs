@@ -1,5 +1,6 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using ServiceAbstraction;
+using Shared;
 using Shared.DataTransferObjects;
 using System;
 using System.Collections.Generic;
@@ -13,28 +14,31 @@ namespace Presentation.Controllers
     [Route("api/[Controller]")] //BaseUrl/api/product
     public class ProductController(IServiceManager _serviceManager):ControllerBase
     {
-        //Get All Products 
+        //Get All Products................................................
         [HttpGet]
-        public async Task<ActionResult<IEnumerable<ProductDto>>> GetAllProducts()
+        public async Task<ActionResult<PaginatedResult<ProductDto>>> GetAllProducts([FromQuery]ProductQueryParams queryParams)
         {
-            var products =await _serviceManager.productService.GetAllProductsAsync();
+            var products =await _serviceManager.productService.GetAllProductsAsync(queryParams);
             return Ok(products);    
         }
-        //Get product By Id 
+       
+        //Get product By Id...................................................
         [HttpGet("{id:int}")]
         public async Task<ActionResult<ProductDto>> GetProduct(int id) 
         {
             var product =await  _serviceManager.productService.GetProductByIdAsync(id);
             return Ok(product);
         }
-        //Get all Types 
+
+        //Get all Types...................................................... 
         [HttpGet("Types")]
         public async Task<ActionResult<IEnumerable<TypeDto>>> GetTypes()
         {
             var types =await  _serviceManager.productService.GetAllTypesAsync();
             return Ok(types);
         }
-        //Get all Brands
+
+        //Get all Brands......................................................
         [HttpGet("Brands")]
         public async Task<ActionResult<IEnumerable<BrandDto>>> GetAllBrands()
         {
