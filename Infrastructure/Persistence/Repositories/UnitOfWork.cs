@@ -24,7 +24,7 @@ namespace Persistence.Repositories
             //1. create object 
             var Repo = new GenericRepository<TEntity, TKey>(_dbContext);
             //2. save object in dic 
-            _repositories["typeName"] = Repo;
+            _repositories[typeName] = Repo;
             //3. return object 
             return Repo;
             

@@ -20,12 +20,12 @@ namespace Persistence.Repositories
         public async Task<IEnumerable<TEntity>> GetAllAsync()
         {
             return await _dbContext.Set<TEntity>().ToListAsync();
-        }
+        }  
 
         public async Task<TEntity?> GetByIdAsync(Tkey id)
         {
             return await _dbContext.Set<TEntity>().FindAsync(id);
-        }
+        } 
 
         public void Remove(TEntity entity)
         {
@@ -36,5 +36,26 @@ namespace Persistence.Repositories
         {
            _dbContext.Update(entity);
         }
+
+
+        #region With Specifications
+        //I need a Function to Create Query [Helper class(SpecificationEvaiuator) ]
+        public async Task<IEnumerable<TEntity>> GetAllAsync(ISpecifications<TEntity, Tkey> specifications)
+        {
+            
+          return await SpecificationEvaiuator.CreateQuery(_dbContext.Set<TEntity>(), specifications).ToListAsync();
+        }
+
+        public async Task<TEntity?> GetByIdAsync(ISpecifications<TEntity, Tkey> specifications)
+        {
+           return await SpecificationEvaiuator.CreateQuery(_dbContext.Set<TEntity>(),specifications).FirstOrDefaultAsync();
+        }
+
+        public async Task CountAsync(ISpecifications<TEntity, Tkey> specifications)
+        {
+             await SpecificationEvaiuator.CreateQuery(_dbContext.Set<TEntity>(), specifications).CountAsync();
+        }
+        #endregion
+
     }
 }
