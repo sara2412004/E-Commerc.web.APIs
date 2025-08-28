@@ -19,8 +19,8 @@ namespace DomainLayer.Contracts
         #endregion
 
         #region Pagination
-        public int Take { get; set; }
-        public int Skip { get; set; }
+        public int Take { get; }
+        public int Skip { get; }
         public bool IsPaginated {  get; set; }
 
         #endregion
