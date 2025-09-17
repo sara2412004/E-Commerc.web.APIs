@@ -1,55 +1,41 @@
 using DomainLayer.Contracts;
+using E_Commerc.web.Extensions;
+using E_Commerc.web.Factories;
+using E_Commerc.web.MiddleWares;
+using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using Persistence;
 using Persistence.Data;
 using Persistence.Repositories;
 using Service;
 using ServiceAbstraction;
+using Shared.ErrorModels;
 
 namespace E_Commerc.web
 {
     public class Program
     {
-        public static void Main(string[] args)
+        public static async void Main(string[] args)
         {
             var builder = WebApplication.CreateBuilder(args);
 
-
-            #region Add services to the container
-
+            //Add services to the container
             builder.Services.AddControllers();
-            // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
-            builder.Services.AddEndpointsApiExplorer();
-            builder.Services.AddSwaggerGen();
-            //......................... b3ml el configruation w el connection 
-            builder.Services.AddDbContext<StoreDbContext>(options =>
-              {
-                  options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection"));
-              }); 
-            //................Data Seeding
-            builder.Services.AddScoped<IDataSeeding,DataSeeding>();
-            //.................Register service(Unit Of Work(reposirys))
-            builder.Services.AddScoped<IUnitOfWork, UnitOfWork>();
-            //..................auto mapper
-            builder.Services.AddAutoMapper(typeof(ProductService).Assembly);
-            //........................Register service(servicmanager(services))
-            builder.Services.AddScoped<IServiceManager,ServiceManager>();
 
+            #region My Functions
+            builder.Services.AddSwaggerServices();
+            builder.Services.AddInfrastructureServices(builder.Configuration);
+            builder.Services.AddApplicationServices(); 
+            builder.Services.AddWebApplicationServices();
             #endregion
             var app = builder.Build();
-
-            #region Data Seeding
-            using var Scoope = app.Services.CreateScope(); // 3lshan 3iza a5ly el continar da ygebly service mo3ina w create mnha object
-            var ObjectOfDataSeeding = Scoope.ServiceProvider.GetRequiredService<IDataSeeding>();// GetRequiredService:bta5od el type bt3 el service w trg3o lia(service b implement el interface idataseeding)
-            ObjectOfDataSeeding.DataSeedAsync();//DataSeed el function ely ana 3mlha fel class 
-            #endregion
-
+            await app.SeedDataBaseAsync(); //my function
 
             #region Configure the HTTP request pipeline
+            app.UseWebCustomExceptionMiddleWares(); //my function
             if (app.Environment.IsDevelopment())
             {
-                app.UseSwagger();
-                app.UseSwaggerUI();
+                app.UseSwaggerMiddleWare(); //my function
             }
             app.UseHttpsRedirection();
             app.UseStaticFiles();

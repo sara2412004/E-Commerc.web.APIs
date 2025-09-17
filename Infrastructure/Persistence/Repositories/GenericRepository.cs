@@ -51,9 +51,9 @@ namespace Persistence.Repositories
            return await SpecificationEvaiuator.CreateQuery(_dbContext.Set<TEntity>(),specifications).FirstOrDefaultAsync();
         }
 
-        public async Task CountAsync(ISpecifications<TEntity, Tkey> specifications)
+        public async Task<int> CountAsync(ISpecifications<TEntity, Tkey> specifications)
         {
-             await SpecificationEvaiuator.CreateQuery(_dbContext.Set<TEntity>(), specifications).CountAsync();
+            return await SpecificationEvaiuator.CreateQuery(_dbContext.Set<TEntity>(), specifications).CountAsync();
         }
         #endregion
 
