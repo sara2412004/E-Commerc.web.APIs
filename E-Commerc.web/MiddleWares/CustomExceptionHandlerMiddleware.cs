@@ -19,8 +19,9 @@ namespace E_Commerc.web.MiddleWares
         {
             try
             {
+                await _next.Invoke(httpContext);
                 await HandleNotFoundEndPointAsync(httpContext);
-
+                
             }
             catch (Exception ex)
             {
@@ -34,22 +35,24 @@ namespace E_Commerc.web.MiddleWares
 
         private static async Task HandleExceptionAsync(HttpContext httpContext, Exception ex)
         {
-            httpContext.Response.StatusCode = ex switch
-            {
-                NotFoundException => StatusCodes.Status404NotFound,
-                _ => StatusCodes.Status500InternalServerError
-            };
-            httpContext.Response.ContentType = "application/json";
-
             //create object of ErrorToReturn to send it as response 
             var Response = new ErrorToReturn()
             {
-                StatusCode = httpContext.Response.StatusCode,
+               
                 ErrorMessage = ex.Message
             };
+            Response.StatusCode = ex switch
+            {
+                NotFoundException => StatusCodes.Status404NotFound,
+                UnauthorizedException=>StatusCodes.Status401Unauthorized,
+                BadRequestException badRequestException => GetBadRequestErrors(badRequestException, Response),
+                _ => StatusCodes.Status500InternalServerError
+            };
+            httpContext.Response.StatusCode = Response.StatusCode;
             //object(Response) dlw2ty C# code f return it as json
             await httpContext.Response.WriteAsJsonAsync(Response);
         }
+
 
         private static async Task HandleNotFoundEndPointAsync(HttpContext httpContext)
         {
@@ -63,6 +66,13 @@ namespace E_Commerc.web.MiddleWares
 
                 await httpContext.Response.WriteAsJsonAsync(Response);
             }
+        }
+        // to extract errors from BadRequestException and set them in response object
+        private static int GetBadRequestErrors(BadRequestException badRequestException, ErrorToReturn response)
+        {
+            response.Errors = badRequestException.Errors;
+            return StatusCodes.Status400BadRequest;
+
         }
     }
 }

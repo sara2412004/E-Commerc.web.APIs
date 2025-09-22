@@ -1,8 +1,11 @@
 ﻿using DomainLayer.Contracts;
+using DomainLayer.Models.IdentityModule;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Persistence.Data;
+using Persistence.Identity;
 using Persistence.Repositories;
 using System;
 using System.Collections.Generic;
@@ -21,11 +24,21 @@ namespace Persistence
             {
                 options.UseSqlServer(configuration.GetConnectionString("DefaultConnection"));
             });
+            //......................... b3ml el configruation w el connection  for identity
+            Services.AddDbContext<StoreIdentityDbContext>(options =>
+            {
+                options.UseSqlServer(configuration.GetConnectionString("IdentityConnection"));
+            });
             //................Data Seeding
             Services.AddScoped<IDataSeeding, DataSeeding>();
 
             //.................Register service(Unit Of Work(reposirys))
            Services.AddScoped<IUnitOfWork, UnitOfWork>();
+
+            //..................Register Identity for user and role managment (ely fel Data seeding) 
+            Services.AddIdentityCore<ApplicationUser>()
+                    .AddRoles<IdentityRole>()
+                    .AddEntityFrameworkStores<StoreIdentityDbContext>();
             return Services;
         }
     }

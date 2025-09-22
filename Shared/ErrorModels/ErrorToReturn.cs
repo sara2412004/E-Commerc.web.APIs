@@ -10,5 +10,7 @@ namespace Shared.ErrorModels
     {
         public int StatusCode { get; set; }
         public string ErrorMessage { get; set; } = default!;
+        // Optional list of detailed errors, useful for validation errors [bad request] 
+        public List<string>? Errors { get; set; }
     }
 }
