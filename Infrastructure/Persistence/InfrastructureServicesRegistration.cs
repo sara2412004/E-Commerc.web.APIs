@@ -7,6 +7,7 @@ using Microsoft.Extensions.DependencyInjection;
 using Persistence.Data;
 using Persistence.Identity;
 using Persistence.Repositories;
+using StackExchange.Redis;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -39,7 +40,15 @@ namespace Persistence
             Services.AddIdentityCore<ApplicationUser>()
                     .AddRoles<IdentityRole>()
                     .AddEntityFrameworkStores<StoreIdentityDbContext>();
+            //..................Register Basket Repositroy
+            Services.AddScoped<IBasketRepository, BasketRepositroy>();
+            Services.AddSingleton<IConnectionMultiplexer>((_)=>
+            {
+               return   ConnectionMultiplexer.Connect(configuration.GetConnectionString("RedisConnectionString"));   
+
+            });
             return Services;
+
         }
     }
 }

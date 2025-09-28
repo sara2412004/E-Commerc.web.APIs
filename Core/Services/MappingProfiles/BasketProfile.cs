@@ -1,6 +1,7 @@
 ﻿using AutoMapper;
+using DomainLayer.Models.BasketModule;
 using DomainLayer.Models.IdentityModule;
-using DomainLayer.Models.OrderModule;
+using Shared.DataTransferObjects.BasketDtos;
 using Shared.DataTransferObjects.IdentityDtos;
 using System;
 using System.Collections.Generic;
@@ -10,12 +11,14 @@ using System.Threading.Tasks;
 
 namespace Service.MappingProfiles
 {
-    public class AddressProfile:Profile
+    public class BasketProfile: Profile
     {
-        public AddressProfile()
+        public BasketProfile()
         {
-            CreateMap<Address,AddressDto>().ReverseMap();
-            
+            CreateMap<BasketDto,CustomerBasket>().ReverseMap();
+            CreateMap<BasketItem, BasketItemDto>().ReverseMap();
+
         }
+
     }
 }
