@@ -12,7 +12,7 @@ using System.Threading.Tasks;
 
 namespace Service
 {
-    public class ServiceManager(IUnitOfWork unitOfWork, IMapper mapper, UserManager<ApplicationUser> _userManager, IConfiguration _configuration,IMapper _mapper) : IServiceManager
+    public class ServiceManager(IUnitOfWork unitOfWork, IMapper mapper, UserManager<ApplicationUser> _userManager, IConfiguration _configuration,IMapper _mapper, IBasketRepository repository) : IServiceManager
     {
         //1.momkn a3ml fun get service zy ma 3mlt fel uint of work 
         //2. manual implemention => ana ely a3ml el object w kda 
@@ -25,5 +25,11 @@ namespace Service
 
         private readonly Lazy<IAuthenticationService> _LazyAuthenticationservic = new Lazy<IAuthenticationService>(() => new AuthenticationService(_userManager,_configuration, _mapper));
         public IAuthenticationService AuthenticationService => _LazyAuthenticationservic.Value;
+
+        private readonly Lazy<IBasketService> _LazyBasketService = new Lazy<IBasketService>(() => new BasketService(repository, mapper));
+        public IBasketService BasketService => _LazyBasketService.Value;
+
+        private readonly Lazy<IOrderService> _LazyOrderService = new Lazy<IOrderService>(() => new OrderService(repository, mapper,unitOfWork));
+        public IOrderService OrderService => _LazyOrderService.Value;
     }
 }

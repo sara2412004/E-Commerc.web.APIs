@@ -1,6 +1,7 @@
 ﻿using DomainLayer.Contracts;
-using DomainLayer.Models;
 using DomainLayer.Models.IdentityModule;
+using DomainLayer.Models.OrderModule;
+using DomainLayer.Models.ProductModule;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using Persistence.Data;
@@ -30,7 +31,7 @@ namespace Persistence
                     await _dbcontext.Database.MigrateAsync();
                 }
                 //bshof fe ay data fe table el product wala la 3lshan el data seeding bt7sl mara wa7da bs fel awal 
-                if (!_dbcontext.Products.Any())
+                if (!_dbcontext.Set<Product>().Any())
                 {
                     //1.Read Data
                     var ProductData = File.OpenRead(@"..\Infrastructure\Persistence\DataSeed\products.json");
@@ -45,7 +46,7 @@ namespace Persistence
                     //4.hro7 add scoop fel program
                 }
 
-                if (!_dbcontext.ProductBrands.Any())
+                if (!_dbcontext.Set<ProductBrand>().Any())
                 {
                     //1.Read Data
                     var ProductBrandData = File.OpenRead(@"..\Infrastructure\Persistence\DataSeed\brands.json");
@@ -59,7 +60,7 @@ namespace Persistence
 
                     //4.hro7 add scoop fel program
                 }
-                if (!_dbcontext.ProductTypes.Any())//bshof en mfhosh ay data
+                if (!_dbcontext.Set<ProductType>().Any())//bshof en mfhosh ay data
                 {
                     //1-ReadData
                     var TypeData = File.OpenRead(@"..\Infrastructure\Persistence\DataSeed\types.json");
@@ -70,6 +71,20 @@ namespace Persistence
                     {
                         _dbcontext.ProductTypes.AddRangeAsync(productTypes);
                     }
+                }
+                if (!_dbcontext.Set<DeliveryMethod>().Any())
+                {
+                    //1.Read Data
+                    var deliveryData = File.OpenRead(@"..\Infrastructure\Persistence\DataSeed\delivery.json");
+                    //2.convert Data "string" =>c# objects
+                    var Methods = await JsonSerializer.DeserializeAsync<List<DeliveryMethod>>(deliveryData);
+                    //3.Save to DB
+                    if (Methods is not null || Methods.Any())
+                    {
+                        await _dbcontext.Set<DeliveryMethod>().AddRangeAsync(Methods);//de el table bt3y el dbset <Products>
+                    }
+
+                    //4.hro7 add scoop fel program
                 }
 
                 await _dbcontext.SaveChangesAsync();
@@ -117,7 +132,7 @@ namespace Persistence
                     await _UserManager.AddToRoleAsync(User01, "Admin");
                     await _UserManager.AddToRoleAsync(User02, "SuperAdmin");
                 }
-                await _identityDbContext.SaveChangesAsync();
+               
             }
             catch (Exception ex)
             {

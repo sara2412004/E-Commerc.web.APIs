@@ -4,12 +4,12 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace DomainLayer.Models
+namespace DomainLayer.Models.ProductModule
 {
-    public class Product:BaseEntity<int>
+    public class Product : BaseEntity<int>
     {
         public string Name { get; set; } = string.Empty;
-        public string Description{ get; set; }=null!;
+        public string Description { get; set; } = null!;
         public string PictureUrl { get; set; } = null!;
         public decimal Price { get; set; }
         public ProductBrand ProductBrand { get; set; } = null!;
