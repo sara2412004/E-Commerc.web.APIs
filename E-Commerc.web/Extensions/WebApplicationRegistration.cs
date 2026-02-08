@@ -1,5 +1,7 @@
 ﻿using DomainLayer.Contracts;
 using E_Commerc.web.MiddleWares;
+using Swashbuckle.AspNetCore.SwaggerUI;
+using System.Text.Json;
 
 namespace E_Commerc.web.Extensions
 {
@@ -20,7 +22,24 @@ namespace E_Commerc.web.Extensions
         public static IApplicationBuilder UseSwaggerMiddleWare(this IApplicationBuilder app)
         {
             app.UseSwagger();
-            app.UseSwaggerUI();
+            app.UseSwaggerUI(options =>
+            {
+                options.ConfigObject = new ConfigObject()
+                {
+                    DisplayRequestDuration = true//3lshan y3rd l duration bta3t el request
+                };
+
+                options.DocumentTitle = "My E-Commerce API";// title ely byb2a fo2 fl page tab
+
+                options.JsonSerializerOptions = new JsonSerializerOptions()
+                {
+                    PropertyNamingPolicy = JsonNamingPolicy.CamelCase//3lshan yb2a el json bta3y camelCase
+                };
+
+                options.DocExpansion(DocExpansion.None);//3lshan yb2a el endpoints kollha m2fola lma a3ml open ll swagger page
+                options.EnableFilter();// search bar adwar 3la ay endpoint
+                options.EnablePersistAuthorization();//mkan el token  .. w m7taga configur 2 services fe AddSwaggerGen fel servicesRegistration 
+            });
             return app;
         }
 

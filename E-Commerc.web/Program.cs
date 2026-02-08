@@ -1,18 +1,6 @@
-using DomainLayer.Contracts;
-using DomainLayer.Models.IdentityModule;
 using E_Commerc.web.Extensions;
-using E_Commerc.web.Factories;
-using E_Commerc.web.MiddleWares;
-using Microsoft.AspNetCore.Identity;
-using Microsoft.AspNetCore.Mvc;
-using Microsoft.EntityFrameworkCore;
 using Persistence;
-using Persistence.Data;
-using Persistence.Identity;
-using Persistence.Repositories;
 using Service;
-using ServiceAbstraction;
-using Shared.ErrorModels;
 
 namespace E_Commerc.web
 {
@@ -24,7 +12,15 @@ namespace E_Commerc.web
 
             //Add services to the container
             builder.Services.AddControllers();
-
+            builder.Services.AddCors(Options =>
+            {
+                Options.AddPolicy("AllowAll", builder =>
+                {
+                    builder.AllowAnyOrigin()
+                          .AllowAnyMethod()
+                          .AllowAnyHeader();
+                });
+            });
             #region My Functions
             builder.Services.AddSwaggerServices();
             builder.Services.AddInfrastructureServices(builder.Configuration);
@@ -46,6 +42,7 @@ namespace E_Commerc.web
 
             app.UseHttpsRedirection();
             app.UseStaticFiles();
+            app.UseCors("AllowAll");  
             app.UseRouting();
             app.UseAuthentication();
             app.UseAuthorization();

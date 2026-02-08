@@ -10,7 +10,7 @@ namespace Shared.DataTransferObjects.OrderDtos
     public class OrderDto
     {
         public string BasktId { get; set; } = default!;
-        public AddressDto Address { get; set; } = default!;
+        public AddressDto shipToAddress { get; set; } = default!;
         public int DeliveryMethodId { get; set; }
 
 

@@ -6,6 +6,7 @@ using System.Threading.Tasks;
 
 namespace DomainLayer.Models.OrderModule
 {
+    //da msh entity asln [value object]
     public class OrderAddress
     {
         public string FirstName { get; set; } = default!;

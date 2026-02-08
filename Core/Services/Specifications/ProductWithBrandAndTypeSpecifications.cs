@@ -18,13 +18,13 @@ namespace Service.Specifications
             AddIncludeExpression(P=>P.ProductType);
 
 
-            switch (queryParams.sortingOptions) 
+            switch (queryParams.sort) 
             {
-                case ProductSortingOptions.NameAsc:
+                case ProductSortingOptions.nameAsc:
                     AddOrderBy(p => p.Name);
                     break;
 
-                case ProductSortingOptions.NameDesc:
+                case ProductSortingOptions.nameDesc:
                     AddOrderByDescending(p => p.Name);
                     break;
 
@@ -43,7 +43,7 @@ namespace Service.Specifications
             
             }
             //Pagination
-            ApplyPagination(queryParams.PageSize, queryParams.PageIndex);
+            ApplyPagination(queryParams.PageSize, queryParams.pageNumber);
             
         }
         //Get by ID
