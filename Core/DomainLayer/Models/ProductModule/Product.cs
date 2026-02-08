@@ -13,6 +13,7 @@ namespace DomainLayer.Models.ProductModule
         public string PictureUrl { get; set; } = null!;
         public decimal Price { get; set; }
         public ProductBrand ProductBrand { get; set; } = null!;
+        //1-M
         public int BrandId { get; set; } //FK
         public ProductType ProductType { get; set; } = null!;
         public int TypeId { get; set; } //Fk

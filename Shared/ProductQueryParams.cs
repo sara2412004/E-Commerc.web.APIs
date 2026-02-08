@@ -10,8 +10,9 @@ namespace Shared
     {
         public int? BrandId { get; set; }
         public int? TypeId { get; set; }
-        public ProductSortingOptions sortingOptions {  get; set; }
-        public int PageIndex { get; set; } = 1;
+        public ProductSortingOptions sort {  get; set; }
+        public string? search { get; set; }
+        public int pageNumber { get; set; } = 1;
         //3lshan law mb3tsh haga 
         private const int DefaultPageSiza = 5;
         private const int MaxPageSiza = 10;

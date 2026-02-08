@@ -76,6 +76,7 @@ namespace Service
             }
 
         }
+
         public async Task<bool> CheckEmailAsync(string email)
         { 
             //check if email exists in DB
@@ -96,6 +97,7 @@ namespace Service
                 Token = await CreateTokenAsync(User)
             };
         }
+
         public async Task<AddressDto> GetCurrentUserAddressAsync(string email)
         {
            var User=await _userManager.Users.Include(U=>U.Address)

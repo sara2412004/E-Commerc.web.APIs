@@ -11,7 +11,7 @@ namespace Service.Specifications
     {
         //get all orders for a specific user
         public OrderSpecifications(string email)
-        : base(o => o.UserEmail == email)
+        : base(o => o.buyerEmail == email)
         {
             // navigation property b3mlhom include 3lshan ageb el data bta3thom
             AddIncludeExpression(o => o.Items);

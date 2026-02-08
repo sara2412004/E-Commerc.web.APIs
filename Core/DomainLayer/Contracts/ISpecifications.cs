@@ -12,7 +12,7 @@ namespace DomainLayer.Contracts
     {
         //Property signature for each Dynamic part in Query 
         public Expression<Func<TEntity,bool>> Criteria { get; } //Where 
-        public List<Expression<Func<TEntity,object>>> IncludeExpressions { get; } //object like(brandname in productDto)
+        public List<Expression<Func<TEntity,object>>> IncludeExpressions { get; } 
         #region Sorting
         public Expression<Func<TEntity, object>> OrderBy { get; }
         public Expression<Func<TEntity, object>> OrderByDescending { get; }

@@ -17,8 +17,24 @@ namespace Service
             //..................auto mapper
             Services.AddAutoMapper(typeof(ProductService).Assembly);
             //........................Register service(servicmanager(services))
-            Services.AddScoped<IServiceManager, ServiceManager>();
+            Services.AddScoped<IServiceManager, ServiceManagerWithFactoryDelegate>();
+            
+            Services.AddScoped<IproductService, ProductService>();
+            Services.AddScoped<Func<IproductService>>(Provider=>() => Provider.GetRequiredService<IproductService>());
+
+            Services.AddScoped<IAuthenticationService, AuthenticationService>();
+            Services.AddScoped<Func<IAuthenticationService>>(Provider => () => Provider.GetRequiredService<IAuthenticationService>());
+
+            Services.AddScoped<IBasketService, BasketService>();
+            Services.AddScoped<Func<IBasketService>>(Provider => () => Provider.GetRequiredService<IBasketService>());
+
+            Services.AddScoped<IOrderService, OrderService>();
+            Services.AddScoped<Func<IOrderService>>(Provider => () => Provider.GetRequiredService<IOrderService>());
+
+            Services.AddScoped<ICacheService, CacheService>();
+            Services.AddScoped<Func<ICacheService>>(Provider => () => Provider.GetRequiredService<ICacheService>());
+
             return Services;
         }
-    }
+    } 
 }

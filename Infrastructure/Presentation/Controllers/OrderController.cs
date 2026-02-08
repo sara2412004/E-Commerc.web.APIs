@@ -29,7 +29,7 @@ namespace Presentation.Controllers
             return Ok(DeliveryMethods);
         }
 
-        // Get All Order By Email
+        // Get All Orders By Email
         [Authorize]
         [HttpGet]
         public async Task<ActionResult<IEnumerable<OrderToReturnDto>>> GetAllOrders()

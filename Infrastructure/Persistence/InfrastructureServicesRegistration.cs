@@ -41,12 +41,15 @@ namespace Persistence
                     .AddRoles<IdentityRole>()
                     .AddEntityFrameworkStores<StoreIdentityDbContext>();
             //..................Register Basket Repositroy
-            Services.AddScoped<IBasketRepository, BasketRepositroy>();
+            Services.AddScoped<IBasketRepository, BasketRepositroy>();//redis database
+            Services.AddScoped<ICacheRepository, CacheRepository>();//redis database
             Services.AddSingleton<IConnectionMultiplexer>((_)=>
             {
                return   ConnectionMultiplexer.Connect(configuration.GetConnectionString("RedisConnectionString"));   
 
             });
+          
+
             return Services;
 
         }
